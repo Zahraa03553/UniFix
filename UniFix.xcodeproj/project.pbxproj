@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5BCBCB8A2EEBD54E002B3EDC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB892EEBD54E002B3EDC /* FirebaseAuth */; };
+		5BCBCB8C2EEBD54E002B3EDC /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB8B2EEBD54E002B3EDC /* FirebaseCore */; };
+		5BCBCB8E2EEBD54E002B3EDC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB8D2EEBD54E002B3EDC /* FirebaseDatabase */; };
+		5BCBCB902EEBD54E002B3EDC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB8F2EEBD54E002B3EDC /* FirebaseFirestore */; };
+		5BCBCB922EEBD54E002B3EDC /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB912EEBD54E002B3EDC /* FirebaseMessaging */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		5BCBCB502EEBB0AD002B3EDC /* UniFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +44,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BCBCB8E2EEBD54E002B3EDC /* FirebaseDatabase in Frameworks */,
+				5BCBCB902EEBD54E002B3EDC /* FirebaseFirestore in Frameworks */,
+				5BCBCB922EEBD54E002B3EDC /* FirebaseMessaging in Frameworks */,
+				5BCBCB8C2EEBD54E002B3EDC /* FirebaseCore in Frameworks */,
+				5BCBCB8A2EEBD54E002B3EDC /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +91,11 @@
 			);
 			name = UniFix;
 			packageProductDependencies = (
+				5BCBCB892EEBD54E002B3EDC /* FirebaseAuth */,
+				5BCBCB8B2EEBD54E002B3EDC /* FirebaseCore */,
+				5BCBCB8D2EEBD54E002B3EDC /* FirebaseDatabase */,
+				5BCBCB8F2EEBD54E002B3EDC /* FirebaseFirestore */,
+				5BCBCB912EEBD54E002B3EDC /* FirebaseMessaging */,
 			);
 			productName = UniFix;
 			productReference = 5BCBCB502EEBB0AD002B3EDC /* UniFix.app */;
@@ -107,6 +125,9 @@
 			);
 			mainGroup = 5BCBCB472EEBB0AD002B3EDC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5BCBCB512EEBB0AD002B3EDC /* Products */;
 			projectDirPath = "";
@@ -337,6 +358,45 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5BCBCB892EEBD54E002B3EDC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		5BCBCB8B2EEBD54E002B3EDC /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		5BCBCB8D2EEBD54E002B3EDC /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		5BCBCB8F2EEBD54E002B3EDC /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		5BCBCB912EEBD54E002B3EDC /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5BCBCB482EEBB0AD002B3EDC /* Project object */;
 }

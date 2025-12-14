@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import FirebaseAuth
 
-class ViewController: UIViewController {
-
+class WelcomeViewController: UIViewController {
+   
     @IBOutlet weak var nextButton: UIButton!
     
     override func viewDidLoad() {
@@ -21,6 +22,8 @@ class ViewController: UIViewController {
         super.viewDidLayoutSubviews()
         nextButton.animateGradient(colors: [UIColor.primaryDarkGrey,UIColor.primaryGrey])
     }
+    
+   
 }
 extension UIButton {
     func animateGradient(colors: [UIColor]) {

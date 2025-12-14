@@ -19,10 +19,21 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        // Email text field design
+        emailTxt.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        emailTxt.layer.borderWidth = 1
+        emailTxt.layer.borderColor = UIColor.primaryDarkGrey.cgColor
+      // Password text field design
+        passwordTxt.addTarget(self, action: #selector(validateFields), for: .editingChanged)
+        passwordTxt.layer.borderWidth = 1
+        passwordTxt.layer.borderColor = UIColor.primaryDarkGrey.cgColor
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         loginButton.animateGradient(colors: [UIColor.primaryDarkGrey,UIColor.primaryGrey])
+    }
+    @objc func validateFields() {
+        loginButton.isEnabled = !emailTxt.text!.isEmpty && !passwordTxt.text!.isEmpty
     }
    func shoeAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -32,20 +43,21 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
     
-    guard let email = emailTxt.text, !email.isEmpty else {
-            shoeAlert(title: "Error", message: "Please enter email")
-            return
-        }
-        guard let password = passwordTxt.text, !password.isEmpty else {
-            shoeAlert(title: "Error", message: "Please enter password")
-            return
-        }
+     let email = emailTxt.text!
+
+        let password = passwordTxt.text!
+        
+
         Auth.auth().signIn(withEmail: email, password: password) {
-            authResult, error in
+         [weak self]   authResult, error in
             if let error = error {
-                self.shoeAlert(title: "Error", message: error.localizedDescription)
+                self?.shoeAlert(title: "Error", message: error.localizedDescription)
+                return
             }
-            self.navigateBasedOnUserType()
+            if let userID = authResult?.user.uid {
+                UserDefaults.standard.set(userID, forKey: UserDefaultsKeys.userlD)
+            }
+            self?.navigateBasedOnUserType()
 
         }
     }

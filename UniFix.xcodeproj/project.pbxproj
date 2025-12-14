@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5BCBCB502EEBB0AD002B3EDC /* UniFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BCBCB502EEBB0AD002B3EDC /* UniFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = UniFix.app; path = "/Users/zahraahumaidan/Documents/UniFix/build/Debug-iphoneos/UniFix.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -59,16 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				5BCBCB522EEBB0AD002B3EDC /* UniFix */,
-				5BCBCB512EEBB0AD002B3EDC /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		5BCBCB512EEBB0AD002B3EDC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				5BCBCB502EEBB0AD002B3EDC /* UniFix.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,7 +120,7 @@
 				5BCBCB882EEBD54E002B3EDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 5BCBCB512EEBB0AD002B3EDC /* Products */;
+			productRefGroup = 5BCBCB472EEBB0AD002B3EDC;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

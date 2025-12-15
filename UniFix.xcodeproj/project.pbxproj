@@ -15,7 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5BCBCB502EEBB0AD002B3EDC /* UniFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = UniFix.app; path = "/Users/zahraahumaidan/Documents/UniFix/build/Debug-iphoneos/UniFix.app"; sourceTree = "<absolute>"; };
+		5B4668A82EF024FD0031429C /* UniFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -59,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				5BCBCB522EEBB0AD002B3EDC /* UniFix */,
+				5B4668A82EF024FD0031429C /* UniFix.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,7 +90,7 @@
 				5BCBCB912EEBD54E002B3EDC /* FirebaseMessaging */,
 			);
 			productName = UniFix;
-			productReference = 5BCBCB502EEBB0AD002B3EDC /* UniFix.app */;
+			productReference = 5B4668A82EF024FD0031429C /* UniFix.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

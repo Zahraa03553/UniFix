@@ -23,14 +23,17 @@ class LoginViewController: UIViewController {
         emailTxt.addTarget(self, action: #selector(validateFields), for: .editingChanged)
         emailTxt.layer.borderWidth = 1
         emailTxt.layer.borderColor = UIColor.primaryDarkGrey.cgColor
+        emailTxt.layer.cornerRadius = 8
       // Password text field design
         passwordTxt.addTarget(self, action: #selector(validateFields), for: .editingChanged)
         passwordTxt.layer.borderWidth = 1
         passwordTxt.layer.borderColor = UIColor.primaryDarkGrey.cgColor
+        passwordTxt.layer.cornerRadius = 8
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         loginButton.animateGradient(colors: [UIColor.primaryDarkGrey,UIColor.primaryGrey])
+    
     }
     @objc func validateFields() {
         loginButton.isEnabled = !emailTxt.text!.isEmpty && !passwordTxt.text!.isEmpty

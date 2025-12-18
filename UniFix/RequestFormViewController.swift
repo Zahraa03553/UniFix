@@ -15,7 +15,9 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var attachmentPhoto: UIImageView!
     @IBOutlet weak var urgencyLevelTxt: UITextField!
-    @IBOutlet weak var detailsTxt: UITextField!
+    
+    @IBOutlet weak var detailsTxt: UITextView!
+    
     @IBOutlet weak var subjectTxt: UITextField!
     @IBOutlet weak var submit: UIButton!
     @IBOutlet weak var contactNumberTxt: UITextField!
@@ -131,8 +133,8 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
-    func showAlert(massage: String) {
-        let alert = UIAlertController(title: nil,message: massage, preferredStyle: .alert)
+    func showAlert(title: String, massage: String) {
+        let alert = UIAlertController(title: title,message: massage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
@@ -146,7 +148,7 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
             
             
         }else {
-            showAlert(massage: "Camera not available")
+            showAlert(title: "Error",massage: "Camera not available")
         }
     }
     
@@ -225,6 +227,11 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
             return
             
         }
+        if !subject.isEmpty && !issueType.isEmpty && !issuelocation.isEmpty && !level.isEmpty && !issuuedescription.isEmpty && !cotactNo.isEmpty {
+            showAlert(title:"Successful Submission",  massage: "You have submit the request successfully!")
+        }else{
+            return
+        }
         guard let username = Auth.auth().currentUser  else {
             return
         }
@@ -232,6 +239,7 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
             let userRequest = Request(id:UUID().uuidString,subject: subject, category: issueType, location: issuelocation , urgency: level , description: issuuedescription, contact: cotactNo ,status: "Pending", date: Date(), FullName: fullname!)
             
             self.saveToFirestore(userRequest)
+       
             
         }
     }

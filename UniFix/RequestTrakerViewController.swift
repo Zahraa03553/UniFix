@@ -24,14 +24,14 @@ class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITabl
     
     func fatchRequest() {
         
-        db.collection("MaintenanceRequest").order(by: "date", descending: true).getDocuments(source: .default) { querysnapshot, error
+        db.collection("MaintenanceRequest").order(by: "date", descending: true).addSnapshotListener { querysnapshot, error
             in
             if let error = error {
                 print("Error:\(error) ")
                 return
             }
             
-            var tatchData: [Request] = []
+            var fatchData: [Request] = []
             for document in querysnapshot!.documents {
                 let data = document.data()
                 let Request = Request(
@@ -47,23 +47,23 @@ class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITabl
                     FullName: data["userFullName"] as!  String
                 )
                 
-                tatchData.append(Request)
+                fatchData.append(Request)
             }
-            self.Requests = tatchData
+            self.Requests = fatchData
             self.RequestTable.reloadData()
         }
     }
-
+    @IBOutlet weak var RequestCell: UITableViewCell!
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Requests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RequestCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RequestCell", for: indexPath) as! RequestTrakerTabelCellTableViewCell
         let request = Requests[indexPath.row]
         cell.textLabel?.text = request.subject
-       // return cell
-      //  cell.detailTextLabel?.text = "\(request.category), \(request.location)"
+        cell.statusLabel?.text = request.status
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

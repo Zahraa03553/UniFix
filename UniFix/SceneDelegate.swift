@@ -19,33 +19,81 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow (windowScene: windowScene)
-        setRootViewController()
-        window?.makeKeyAndVisible()
-        
-    }
-    private func setRootViewController() {
+     //   window = UIWindow (windowScene: windowScene)
+      //  let defaults = UserDefaults.standard.bool(forKey:"hasLunchedBefore")
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let defaults = UserDefaults.standard
-        
-        // Check if user ID exists in UserDefaults
-        if let userID = defaults.string(forKey: UserDefaultsKeys.userlD),
-           Auth.auth().currentUser != nil {
-            // User is logged in - show Home screen
-            
-            if let studentTB  = storyboard.instantiateViewController(withIdentifier: "StudehtTsbBar") as? UITabBarController
-            {
-                window?.rootViewController = studentTB
-            }
-        } else {
-            if let loginVC =
-                storyboard.instantiateViewController(withIdentifier:
-                "LoginViewController") as? LoginViewController {
-                window?.rootViewController = loginVC
-            }
-        }
-    }
 
+        // Check if user ID exists in UserDefaults
+       // if let userID = UserDefaults.standard.string(forKey: //UserDefaultsKeys.userlD),
+        
+        
+            Auth.auth().addStateDidChangeListener{ auth, user in
+            // User is logged in - show Home screen
+            if  user != nil{
+                guard let userId = Auth.auth().currentUser?.uid else {return}
+                Firestore.firestore().collection("users").document(userId).getDocument {
+                    snapshot, error in
+                    if let data = snapshot?.data(),
+                       let userType = data["userType"] as? String {
+                        if userType == "student" {
+                            
+                            let studentTB  = storyboard.instantiateViewController(withIdentifier: "StudehtTsbBar") as? UITabBarController
+                            
+                            self.window?.rootViewController = studentTB
+                               self.window?.makeKeyAndVisible()
+                            
+                            
+                        }
+                        if userType == "admin" {
+                            
+                            let adminTB  = storyboard.instantiateViewController(withIdentifier: "adminTB") as? UITabBarController
+                            
+                            self.window?.rootViewController = adminTB
+                              self.window?.makeKeyAndVisible()
+                        }
+                        if userType == "maintenanceTeam" {
+                            let maintenanceTB  = storyboard.instantiateViewController(withIdentifier: "goToMaintenanceDashboard") as? UITabBarController
+                            self.window?.rootViewController = maintenanceTB
+                            self.window?.makeKeyAndVisible()
+
+                        }
+                            
+                        }
+                    }
+                
+            } else  if !UserDefaults.standard.bool(forKey:"hasLunchedBefore") {
+                self.showWelcome()
+            } else {
+                self.showLogin()
+                
+
+            }
+            
+        }
+
+        
+    }
+       
+   
+    func showWelcome() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let welcomeVC =
+        storyboard.instantiateViewController(withIdentifier:"welcomeNB") as? UINavigationController
+        self.window?.rootViewController = welcomeVC
+        self.window?.makeKeyAndVisible()
+        UserDefaults.standard.set(true, forKey: "hasLunchedBefore")
+    }
+        
+    func showLogin() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC =  storyboard.instantiateViewController(withIdentifier:"loginNB") as? UINavigationController
+        self.window?.rootViewController = loginVC
+        self.window?.makeKeyAndVisible()
+    }
+              
+            
+        
+    
     
    
         func sceneDidDisconnect(_ scene: UIScene) {

@@ -7,7 +7,8 @@
 
 import Foundation
 struct UserDefaultsKeys {
-    static let hasLanuch = "has_lanuch_key"
     static let userlD = "user_id_key"
+    static let userType = "userType"
+
     
 }

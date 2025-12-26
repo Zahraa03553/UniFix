@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -19,60 +20,67 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-     //   window = UIWindow (windowScene: windowScene)
+       window = UIWindow(windowScene: windowScene)
       //  let defaults = UserDefaults.standard.bool(forKey:"hasLunchedBefore")
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+       // let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
         // Check if user ID exists in UserDefaults
        // if let userID = UserDefaults.standard.string(forKey: //UserDefaultsKeys.userlD),
         
         
-            Auth.auth().addStateDidChangeListener{ auth, user in
+          //  Auth.auth().addStateDidChangeListener{ auth, user in
             // User is logged in - show Home screen
-            if  user != nil{
-                guard let userId = Auth.auth().currentUser?.uid else {return}
-                Firestore.firestore().collection("users").document(userId).getDocument {
-                    snapshot, error in
-                    if let data = snapshot?.data(),
-                       let userType = data["userType"] as? String {
-                        if userType == "student" {
-                            
-                            let studentTB  = storyboard.instantiateViewController(withIdentifier: "StudehtTsbBar") as? UITabBarController
-                            
-                            self.window?.rootViewController = studentTB
-                               self.window?.makeKeyAndVisible()
-                            
-                            
-                        }
-                        if userType == "admin" {
-                            
-                            let adminTB  = storyboard.instantiateViewController(withIdentifier: "adminTB") as? UITabBarController
-                            
-                            self.window?.rootViewController = adminTB
-                              self.window?.makeKeyAndVisible()
-                        }
-                        if userType == "maintenanceTeam" {
-                            let maintenanceTB  = storyboard.instantiateViewController(withIdentifier: "goToMaintenanceDashboard") as? UITabBarController
-                            self.window?.rootViewController = maintenanceTB
-                            self.window?.makeKeyAndVisible()
-
-                        }
-                            
-                        }
-                    }
-                
-            } else  if !UserDefaults.standard.bool(forKey:"hasLunchedBefore") {
+            if let  user = Auth.auth().currentUser {
+                goToUserTypeTB(uid: user.uid)
+        }
+               // guard let userId = Auth.auth().currentUser?.uid else {return}
+               
+             else  if !UserDefaults.standard.bool(forKey:"hasLunchedBefore") {
                 self.showWelcome()
             } else {
                 self.showLogin()
                 
 
             }
-            
+        self.window?.makeKeyAndVisible()
+
         }
 
-        
-    }
+func goToUserTypeTB(uid: String) {
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let db = Firestore.firestore()
+            db.collection("users").document(uid).getDocument {
+                snapshot, error in
+                if let data = snapshot?.data(),
+                   let userType = data["userType"] as? String {
+                    if userType == "student" {
+                        
+                        let studentTB  = storyboard.instantiateViewController(withIdentifier: "StudehtTsbBar") as? UITabBarController
+                        
+                        self.window?.rootViewController = studentTB
+                        self.window?.makeKeyAndVisible()
+                        
+                        
+                    }
+                    if userType == "admin" {
+                        
+                        let adminTB  = storyboard.instantiateViewController(withIdentifier: "adminTB") as? UITabBarController
+                        
+                        self.window?.rootViewController = adminTB
+                        self.window?.makeKeyAndVisible()
+                    }
+                    if userType == "MaintenanceTeam" {
+                        let maintenanceTB  = storyboard.instantiateViewController(withIdentifier: "goToMaintenanceDashboard") as? UITabBarController
+                        self.window?.rootViewController = maintenanceTB
+                        self.window?.makeKeyAndVisible()
+                        
+                    }
+                        
+                    }
+                }
+            
+        }
+    
        
    
     func showWelcome() {

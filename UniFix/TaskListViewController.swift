@@ -1,21 +1,18 @@
 //
-//  RequestDetailsViewController.swift
+//  TaskListViewController.swift
 //  UniFix
 //
-//  Created by zahraa humaidan on 24/12/2025.
+//  Created by zahraa humaidan on 26/12/2025.
 //
 
 import UIKit
 
-class RequestDetailsViewController: UIViewController {
-    var Request: Request?
-    @IBOutlet weak var lblSubject: UILabel!
+class TaskListViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        lblSubject.text = Request?.subject
-       // lblSubject.text = "hi"
     }
     
 

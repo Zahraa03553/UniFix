@@ -13,6 +13,7 @@ class MaintenanceDashboardViewController: UIViewController, UITableViewDataSourc
    
 
     
+    @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var NewRequestTableView: UITableView!
     var Requests: [Request] = []
     let db = Firestore.firestore()
@@ -69,6 +70,23 @@ class MaintenanceDashboardViewController: UIViewController, UITableViewDataSourc
         cell.textLabel?.text = requests.subject
         return cell
     }
+    
+    
+    @IBAction func AcceptTapped(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Conform Accept", message: "Are you sure you want to accept this request?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+           print("Cancel")
+        }
+        let  OKAction = UIAlertAction(title: "Accept", style: .default) {  _ in
+            sender.setTitle("Accepted", for: .normal)
+            sender.backgroundColor = UIColor.black
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(OKAction)
+        present(alert, animated: true)
+    }
+       
+    
     
   func signOut() {
         do {

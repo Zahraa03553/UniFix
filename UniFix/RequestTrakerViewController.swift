@@ -69,7 +69,16 @@ class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetails" {
+            if let destination = segue.destination as? RequestDetailsViewController{
+                if let indexPath = RequestTable.indexPathForSelectedRow {
+                    let selectedRequest = Requests[indexPath.row]
+                    destination.Request = selectedRequest
+                }
+            }
+        }
+    }
     /*
     // MARK: - Navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {1ZPHD0U0YWKYY/FirebaseAuthInterop-PLELVRC4TWI7.pcm' does not existwarning: (arm64) /Users/zahraahumaidan/Library/Developer/Xcode/DerivedData/UniFix-bowekbspfzewoahe

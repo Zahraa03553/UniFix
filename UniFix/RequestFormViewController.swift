@@ -257,8 +257,7 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
     }
     func saveToFirestore(_ Request: Request)  {
         
-        
-        db.collection("MaintenanceRequest").document(Request.id).setData(["subject": Request.subject, "category": Request.category, "location": Request.location, "urgency": Request.urgency, "description": Request.description, "contact": Request.contact,"status": "Pending", "date": Request.date, "userFullName": Request.FullName])
+        db.collection("MaintenanceRequest").document(Request.id).setData(["subject": Request.subject, "category": Request.category, "location": Request.location, "urgency": Request.urgency, "description": Request.description, "contact": Request.contact,"status": "New", "date": Request.date, "userFullName": Request.FullName])
         { error in
             if let error = error {
                 print("Document added with ID:")

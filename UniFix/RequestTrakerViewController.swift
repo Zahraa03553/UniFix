@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import FirebaseAuth
 import  FirebaseFirestore
 class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let db = Firestore.firestore()
-
+    let userid = Auth.auth().currentUser!.uid
     @IBOutlet weak var RequestTable: UITableView!
     var Requests: [Request] = []
     override func viewDidLoad() {
@@ -24,7 +25,7 @@ class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITabl
     
     func fatchRequest() {
         
-        db.collection("MaintenanceRequest").order(by: "date", descending: true).addSnapshotListener { querysnapshot, error
+        db.collection("MaintenanceRequest").order(by: "date", descending: true).whereField("SendBy", isEqualTo: userid).addSnapshotListener { querysnapshot, error
             in
             if let error = error {
                 print("Error:\(error) ")
@@ -43,8 +44,9 @@ class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITabl
                     description: data["description"] as! String,
                     contact: data["contact"] as!  String,
                     status: data["status"] as!  String,
-                    date:  Date(),
-                    FullName: data["userFullName"] as!  String
+                    date:  data["date"] as? Timestamp,
+                    FullName: data["userFullName"] as!  String,
+                    Accept: "Accept"
                 )
                 
                 fatchData.append(Request)

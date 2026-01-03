@@ -9,13 +9,13 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class MaintenanceDashboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MaintenanceDashboardViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AcceptDelegate {
    
-
     
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var NewRequestTableView: UITableView!
     var Requests: [Request] = []
+
     let db = Firestore.firestore()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +49,9 @@ class MaintenanceDashboardViewController: UIViewController, UITableViewDataSourc
                     description: data["description"] as! String,
                     contact: data["contact"] as!  String,
                     status: data["status"] as!  String,
-                    date:  Date(),
-                    FullName: data["userFullName"] as!  String
+                    date:  data["date"] as? Timestamp,
+                    FullName: data["userFullName"] as!  String,
+                    Accept: data["Accept"] as!  String
                 )
                 
                 fatchData.append(Request)
@@ -65,29 +66,28 @@ class MaintenanceDashboardViewController: UIViewController, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewRequestCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewRequestCell", for: indexPath) as! AcceptCellTableViewCell
+        cell.delegate = self
       let requests = Requests[indexPath.row]
         cell.textLabel?.text = requests.subject
+        cell.reqid = requests.id
+        cell.AcceptLabel.setTitle(requests.Accept, for: .normal)
+        switch requests.Accept {
+            
+        case  "Accepted":
+            cell.AcceptLabel.setTitleColor(UIColor.white, for: .disabled)
+            cell.AcceptLabel.backgroundColor = UIColor.black
+            cell.AcceptLabel.isEnabled = false
+        default:
+            cell.AcceptLabel.setTitleColor(UIColor.white, for: .normal)
+            cell.AcceptLabel.backgroundColor = UIColor.primaryDarkGrey
+
+
+        }
         return cell
     }
     
-    
-    @IBAction func AcceptTapped(_ sender: UIButton) {
-        let alert = UIAlertController(title: "Conform Accept", message: "Are you sure you want to accept this request?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-           print("Cancel")
-        }
-        let  OKAction = UIAlertAction(title: "Accept", style: .default) {  _ in
-            sender.setTitle("Accepted", for: .normal)
-            sender.backgroundColor = UIColor.black
-        }
-        alert.addAction(cancelAction)
-        alert.addAction(OKAction)
-        present(alert, animated: true)
-    }
-       
-    
-    
+        
   func signOut() {
         do {
             try Auth.auth().signOut()
@@ -128,12 +128,32 @@ func showAlertConform(){
          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
          present(alert, animated: true)
      }
-    
+     func didTappedAccept(_ cell: AcceptCellTableViewCell) {
+         let alert = UIAlertController(title: "Are you sure you want to accept this request?", message: "Please tap accept to proceed", preferredStyle: .alert)
+        
+          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+         alert.addAction(UIAlertAction(title: "Accept", style: .default, handler: { _ in
+             cell.updatabutton()
+             cell.addTask(reqid: cell.reqid, teamid: cell.userid!)
+         }))
+        
+         self.present(alert, animated: true)
+    }
     
     @IBAction func LogOut(_ sender: UIBarButtonItem) {
         showAlertConform()
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetailsM" {
+            if let destination = segue.destination as? RequestDetailsViewController{
+                if let indexPath = NewRequestTableView.indexPathForSelectedRow {
+                    let selectedRequest = Requests[indexPath.row]
+                    destination.Request = selectedRequest
+                }
+            }
+    }
+   }
     /*
     // MARK: - Navigation
 

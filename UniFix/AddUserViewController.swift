@@ -1,89 +1,90 @@
 //
-//  CreateUserViewController.swift
+//  AddUserViewController.swift
 //  UniFix
 //
-//  Created by zahraa humaidan on 24/12/2025.
+//  Created by zahraa humaidan on 02/01/2026.
 //
 
 import UIKit
 import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
-class CreateUserViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddUserViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+   
     
+
     @IBOutlet weak var txtFullName: UITextField!
     
     @IBOutlet weak var txtEmail: UITextField!
     
+    @IBOutlet weak var txtUserType: UITextField!
+    @IBOutlet weak var userTypeView: UIStackView!
     @IBOutlet weak var txtPassword: UITextField!
     
-    @IBOutlet weak var rxtUserType: UITextField!
-    @IBOutlet weak var AddButton: UIButton!
-    @IBOutlet weak var drobDownButton: UIButton!
-    @IBOutlet weak var userTypeList: UITableView!
-    let db = Firestore.firestore()
+    
+    @IBOutlet weak var typeTable: UITableView!
+    @IBOutlet weak var AddNewButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Do any additional setup after loading the view.
-        
-        userTypeList.delegate = self
-        userTypeList.dataSource = self
-        userTypeList.isHidden = true
-        
+        typeTable.dataSource = self
+        typeTable.delegate = self
+        typeTable.isHidden = true
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        AddButton.animateGradient(colors: [UIColor.primaryDarkGrey,UIColor.primaryGrey])
         txtFullName.layer.cornerRadius = 8
         txtFullName.layer.borderWidth = 1
         txtFullName.layer.borderColor = UIColor.primaryDarkGrey.cgColor
-        // Email text Field layer
+        // Email
         txtEmail.layer.cornerRadius = 8
         txtEmail.layer.borderWidth = 1
         txtEmail.layer.borderColor = UIColor.primaryDarkGrey.cgColor
-        // Password text Field layer
+        // Password
         txtPassword.layer.cornerRadius = 8
         txtPassword.layer.borderWidth = 1
         txtPassword.layer.borderColor = UIColor.primaryDarkGrey.cgColor
-        // DrobDawn Button  Field layer
-        rxtUserType.layer.cornerRadius = 8
-        rxtUserType.layer.borderWidth = 1
-        rxtUserType.layer.borderColor = UIColor.primaryDarkGrey.cgColor
-        userTypeList.layer.borderWidth = 1
-        userTypeList.layer.borderColor = UIColor.primaryDarkGrey.cgColor
+    // user Type
+      userTypeView.layer.cornerRadius = 8
+        userTypeView.layer.borderWidth = 1
+        userTypeView.layer.borderColor = UIColor.primaryDarkGrey.cgColor
+        // Add Button
+        AddNewButton.animateGradient(colors: [UIColor.primaryDarkGrey,UIColor.primaryGrey])
     }
-    
-    @IBAction func showDrobDawn(_ sender: UIButton) {
-        userTypeList.isHidden.toggle()
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "userType", for: indexPath)
-        cell.textLabel?.text = indexPath.row == 0 ? "Student/Staff" : "MaintananceTeam"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTypeCell", for: indexPath)
+        cell.textLabel?.text = indexPath.row == 0 ? "StudentORStaff" : "MaintananceTeam"
         return cell
+
+        
     }
-    
+
+    @IBAction func showType(_ sender: UIButton) {
+      typeTable.isHidden.toggle()
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selected = indexPath.row == 0 ? "Student/Staff" : "MaintananceTeam"
-        rxtUserType.text = selected
-        userTypeList.isHidden = true
+        let selected = indexPath.row == 0 ? "StudentORStaff" : "MaintenanceTeam"
+        txtUserType.text = selected
+        typeTable.isHidden = true
     }
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
-    @IBAction func addNewUser(_ sender: UIButton) {
+    
+    @IBAction func AddNewTapped(_ sender: UIButton) {
+    // Add
         guard let username = txtFullName.text, !username.isEmpty else {
             showAlert(title: "Missing Name", message: "Please enter user full name.")
             return
         }
-        guard let email = txtEmail.text, !email.isEmpty else {
+       guard let email = txtEmail.text, !email.isEmpty else {
             showAlert(title: "Missing Email", message: "Please anter email address.")
             return
         }
@@ -91,12 +92,12 @@ class CreateUserViewController: UIViewController, UITableViewDelegate, UITableVi
             showAlert (title: "Missing Password", message: "Pleaseenter password.")
             return
         }
-        guard let userRole = rxtUserType.text, !userRole.isEmpty else {
+        guard let userRole = txtUserType.text, !userRole.isEmpty else {
         
             showAlert (title: "Missing UserType", message:"Please select user type.")
            print("Error")
            return
-        }
+          }
         
         // Validate password length
         guard password.count >= 6 else {
@@ -114,12 +115,12 @@ class CreateUserViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             guard let user = authResult?.user else {
                 return
-            }
+           }
              
-            let Usera = UserAccount(id: user.uid , fullName: username , email: email, userType: userRole)
-            self.saveToFirestore(Usera)
+            let Usera = UserAccount(id: user.uid , fullName: username , email: email, userType: userRole )
+           self.saveToFirestore(Usera)
             self.showAlert(title: "Successful", message: "User added successfully.")
-    }
+        }
         // Added successful
        
    
@@ -127,8 +128,8 @@ class CreateUserViewController: UIViewController, UITableViewDelegate, UITableVi
     }
 
     func saveToFirestore(_ UserAccount: UserAccount)  {
-      
-        db.collection("users").document(UserAccount.id).setData(["FullName":UserAccount.fullName, "Email": UserAccount.email, "userType": UserAccount.userType!]) { error in
+        let db = Firestore.firestore()
+        db.collection("users").document(UserAccount.id!).setData(["FullName":UserAccount.fullName, "Email": UserAccount.email, "userType": UserAccount.userType!]) { error in
             if let error = error {
                 print("Document Error: \(error.localizedDescription)")
             }else {
@@ -136,11 +137,17 @@ class CreateUserViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
         }
+        
+        Auth.auth().signIn(withEmail: "unifix.admi@gmail.com", password: "Zah03553"){ result, errot in
+            if let error = errot {
+                print("Error: \(error.localizedDescription)")
+            }
+            
+        }
     }
 
     
-   
-
+    
     /*
     // MARK: - Navigation
 

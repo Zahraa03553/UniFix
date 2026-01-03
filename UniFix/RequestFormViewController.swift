@@ -23,7 +23,6 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var contactNumberTxt: UITextField!
     @IBOutlet weak var issueCategoryTxt: UITextField!
     @IBOutlet weak var locationTxt: UITextField!
-    
     @IBOutlet weak var chooseView: UIStackView!
     
     //  let errorMessage =  UILabel()
@@ -232,11 +231,11 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
         }else{
             return
         }
-        guard let username = Auth.auth().currentUser  else {
-            return
-        }
+            
+        guard let username = Auth.auth().currentUser else { return }
+
         fatchUserName(userID: username.uid) { fullname in
-            let userRequest = Request(id:UUID().uuidString,subject: subject, category: issueType, location: issuelocation , urgency: level , description: issuuedescription, contact: cotactNo ,status: "Pending", date: Date(), FullName: fullname!)
+            let userRequest = Request(id:UUID().uuidString,subject: subject, category: issueType, location: issuelocation , urgency: level , description: issuuedescription, contact: cotactNo ,status: "New", date: nil, FullName: fullname!, Accept: "Accept")
             
             self.saveToFirestore(userRequest)
        
@@ -257,10 +256,10 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
     }
     func saveToFirestore(_ Request: Request)  {
         
-        db.collection("MaintenanceRequest").document(Request.id).setData(["subject": Request.subject, "category": Request.category, "location": Request.location, "urgency": Request.urgency, "description": Request.description, "contact": Request.contact,"status": "New", "date": Request.date, "userFullName": Request.FullName])
+        db.collection("MaintenanceRequest").document(Request.id).setData(["subject": Request.subject, "category": Request.category, "location": Request.location, "urgency": Request.urgency, "description": Request.description, "contact": Request.contact,"status": "New", "date": FieldValue.serverTimestamp(), "userFullName": Request.FullName, "Accept": "Accept","SendBy": Auth.auth().currentUser!.uid])
         { error in
             if let error = error {
-                print("Document added with ID:")
+                print("Document added with ID:\(error.localizedDescription)")
             }else {
                 print("Document added successfully")
             }

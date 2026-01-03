@@ -42,7 +42,7 @@ class SettingsViewController: UIViewController {
        let storyboard = UIStoryboard(name: "Main", bundle: nil)
          let loginVC =
             storyboard.instantiateViewController(withIdentifier:
-            "LoginViewController")
+            "loginNB") as? UINavigationController
         window.rootViewController = loginVC
                 window.makeKeyAndVisible()
             }

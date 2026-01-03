@@ -78,7 +78,7 @@ class LoginViewController: UIViewController {
                     self.performSegue(withIdentifier: "goToStudentDashboard", sender: self)
                 }
                 if userType == "MaintenanceTeam" {
-                    self.performSegue(withIdentifier: "goToMaintenanceDashboard", sender: self)
+                    self.performSegue(withIdentifier: "goToMaintenanceDashboard", sender: self) 
                 }
             }
         }

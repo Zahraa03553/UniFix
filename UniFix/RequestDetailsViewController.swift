@@ -6,16 +6,38 @@
 //
 
 import UIKit
-
+import FirebaseFirestore
 class RequestDetailsViewController: UIViewController {
     var Request: Request?
+    
+    @IBOutlet weak var lblReqID: UILabel!
+    
+    @IBOutlet weak var lblReqDate: UILabel!
+    
+    @IBOutlet weak var lblNumber: UILabel!
+    @IBOutlet weak var lblCategory: UILabel!
     @IBOutlet weak var lblSubject: UILabel!
+    
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblDetails: UILabel!
+    @IBOutlet weak var lblLevel: UILabel!
+    @IBOutlet weak var lblLocation: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        lblReqID.text = Request?.id
+        let dateF = Request?.date as? Timestamp
+        let df = dateF?.dateValue()
+        lblReqDate.text = DateFormatter.localizedString(from: df!, dateStyle: .medium, timeStyle: .short)
+        lblNumber.text = Request?.contact
+        lblCategory.text = Request?.category
         lblSubject.text = Request?.subject
-       // lblSubject.text = "hi"
+        lblName.text = Request?.FullName
+        lblDetails.text = Request?.description
+        lblLevel.text = Request?.urgency
+        lblLocation.text = Request?.location
+        
     }
     
 

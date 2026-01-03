@@ -9,7 +9,7 @@ import UIKit
 import FirebaseFirestore
 // Protocol for button action sheat in table view
 protocol UpdateStatusTableViewCellDelegate: AnyObject {
-func updateStatusTapped(_ cell: UpdateStatusTableViewCell)
+func updateStatusTapped(in cell: UpdateStatusTableViewCell,  sender: UIButton)
 }
 class UpdateStatusTableViewCell: UITableViewCell {
 
@@ -30,7 +30,7 @@ class UpdateStatusTableViewCell: UITableViewCell {
     //Button Action
     
     @IBAction func UpdateButtonTapped(_ sender: UIButton) {
-         delegate?.updateStatusTapped(self)
+        delegate?.updateStatusTapped(in: self, sender: sender)
     }
     // Update to In Progress
     func updateStatusInProgress(){

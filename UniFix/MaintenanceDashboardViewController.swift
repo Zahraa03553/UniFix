@@ -86,6 +86,19 @@ class MaintenanceDashboardViewController: UIViewController, UITableViewDataSourc
         }
         return cell
     }
+    func didTappedAccept(_ cell: AcceptCellTableViewCell) {
+        let alert = UIAlertController(title: "Are you sure you want to accept this request?", message: "Please tap accept to proceed", preferredStyle: .alert)
+       
+         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+       
+        alert.addAction(UIAlertAction(title: "Accept", style: .default, handler: { _ in
+            cell.updatabutton()
+            cell.addTask(reqid: cell.reqid, teamid: cell.userid!)
+        }))
+       
+        
+        self.present(alert, animated: true)
+   }
     
         
   func signOut() {
@@ -106,7 +119,7 @@ class MaintenanceDashboardViewController: UIViewController, UITableViewDataSourc
        let storyboard = UIStoryboard(name: "Main", bundle: nil)
          let loginVC =
             storyboard.instantiateViewController(withIdentifier:
-            "LoginViewController")
+            "loginNB") as? UINavigationController
         window.rootViewController = loginVC
                 window.makeKeyAndVisible()
             }
@@ -128,18 +141,7 @@ func showAlertConform(){
          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
          present(alert, animated: true)
      }
-     func didTappedAccept(_ cell: AcceptCellTableViewCell) {
-         let alert = UIAlertController(title: "Are you sure you want to accept this request?", message: "Please tap accept to proceed", preferredStyle: .alert)
-        
-          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-         alert.addAction(UIAlertAction(title: "Accept", style: .default, handler: { _ in
-             cell.updatabutton()
-             cell.addTask(reqid: cell.reqid, teamid: cell.userid!)
-         }))
-        
-         self.present(alert, animated: true)
-    }
+    
     
     @IBAction func LogOut(_ sender: UIBarButtonItem) {
         showAlertConform()

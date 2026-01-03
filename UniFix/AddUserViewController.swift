@@ -20,7 +20,7 @@ class AddUserViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var txtUserType: UITextField!
     @IBOutlet weak var userTypeView: UIStackView!
     @IBOutlet weak var txtPassword: UITextField!
-    
+    let type = ["student", "staff", "MaintenanceTeam"]
     
     @IBOutlet weak var typeTable: UITableView!
     @IBOutlet weak var AddNewButton: UIButton!
@@ -53,12 +53,12 @@ class AddUserViewController: UIViewController, UITableViewDataSource, UITableVie
         AddNewButton.animateGradient(colors: [UIColor.primaryDarkGrey,UIColor.primaryGrey])
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserTypeCell", for: indexPath)
-        cell.textLabel?.text = indexPath.row == 0 ? "StudentORStaff" : "MaintananceTeam"
+        cell.textLabel?.text = type[indexPath.row]
         return cell
 
         
@@ -68,7 +68,7 @@ class AddUserViewController: UIViewController, UITableViewDataSource, UITableVie
       typeTable.isHidden.toggle()
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selected = indexPath.row == 0 ? "StudentORStaff" : "MaintenanceTeam"
+        let selected = type[indexPath.row]
         txtUserType.text = selected
         typeTable.isHidden = true
     }
@@ -129,7 +129,7 @@ class AddUserViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func saveToFirestore(_ UserAccount: UserAccount)  {
         let db = Firestore.firestore()
-        db.collection("users").document(UserAccount.id!).setData(["FullName":UserAccount.fullName, "Email": UserAccount.email, "userType": UserAccount.userType!]) { error in
+        db.collection("users").document(UserAccount.id!).setData(["userFullName":UserAccount.fullName, "email": UserAccount.email, "userType": UserAccount.userType!]) { error in
             if let error = error {
                 print("Document Error: \(error.localizedDescription)")
             }else {

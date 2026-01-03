@@ -53,7 +53,7 @@ func goToUserTypeTB(uid: String) {
                 snapshot, error in
                 if let data = snapshot?.data(),
                    let userType = data["userType"] as? String {
-                    if userType == "student" {
+                    if userType == "student" || userType == "staff" {
                         
                         let studentTB  = storyboard.instantiateViewController(withIdentifier: "StudehtTsbBar") as? UITabBarController
                         

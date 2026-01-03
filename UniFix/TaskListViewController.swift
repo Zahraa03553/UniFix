@@ -68,6 +68,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.textLabel?.text = task.subject
         switch task.status {
         case "In Progress":
+            
             cell.UpdateButton.setTitle("In Progress", for:  .normal)
             case "Completed":
             cell.UpdateButton.setTitle("Completed", for: .normal)
@@ -78,7 +79,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     // use protocol func
-    func updateStatusTapped(_ cell: UpdateStatusTableViewCell){
+    func updateStatusTapped(in cell: UpdateStatusTableViewCell, sender: UIButton){
         let actionSheet = UIAlertController(title: "Update Status", message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "In Progress", style: .default, handler: { (_) in
             cell.updateStatusInProgress()
@@ -88,6 +89,11 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
 
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        if let popvarcontroller = actionSheet.popoverPresentationController {
+            popvarcontroller.sourceView = sender
+            popvarcontroller.sourceRect = sender.bounds
+            popvarcontroller.permittedArrowDirections = [.up, .down]
+        }
         self.present(actionSheet, animated: true)
     }
 

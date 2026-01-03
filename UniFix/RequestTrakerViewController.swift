@@ -66,6 +66,7 @@ class RequestTrakerViewController: UIViewController, UITableViewDelegate, UITabl
         let request = Requests[indexPath.row]
         cell.textLabel?.text = request.subject
         cell.statusLabel?.text = request.status
+    
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

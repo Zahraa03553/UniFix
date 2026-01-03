@@ -6,14 +6,12 @@
 //
 
 import UIKit
-import PhotosUI
 import FirebaseFirestore
 import FirebaseAuth
-class RequestFormViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, PHPickerViewControllerDelegate {
+class RequestFormViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     
-    @IBOutlet weak var attachmentPhoto: UIImageView!
     @IBOutlet weak var urgencyLevelTxt: UITextField!
     
     @IBOutlet weak var detailsTxt: UITextView!
@@ -23,16 +21,14 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var contactNumberTxt: UITextField!
     @IBOutlet weak var issueCategoryTxt: UITextField!
     @IBOutlet weak var locationTxt: UITextField!
-    @IBOutlet weak var chooseView: UIStackView!
     
     //  let errorMessage =  UILabel()
     var myPickerView: UIPickerView!
     var listoFCategories =  ["Select Issue Category","Electrical","Plumbing","IT","HVAC","Safety","Furniture","GroundKeeping","ACCessibility"]
+    // urgency level
     var levelPickerView: UIPickerView!
     var listLevels = ["Select Urgency Level","High","Medium","Low"]
     let db = Firestore.firestore()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,12 +54,7 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
         contactNumberTxt.layer.borderWidth = 1
         contactNumberTxt.layer.cornerRadius = 8
         contactNumberTxt.layer.borderColor = UIColor.primaryDarkGrey.cgColor
-        chooseView.isHidden = true
-        chooseView.layer.cornerRadius = 16
-        let tap = UITapGestureRecognizer(target: self, action: #selector(hideChoser))
-        tap.cancelsTouchesInView = false
         
-        self.view.addGestureRecognizer(tap)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -126,7 +117,7 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
     //
     
     
-    //
+    // show alert
     func showAlert() {
         let alert = UIAlertController(title: "Error", message: " Please fill all the required fields", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -137,57 +128,7 @@ class RequestFormViewController: UIViewController, UIImagePickerControllerDelega
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
-    func openCamera() {
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = .camera
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            present(imagePicker, animated: true)
-            
-            
-        }else {
-            showAlert(title: "Error",massage: "Camera not available")
-        }
-    }
-    
-    @IBAction func choserButtonTapped(_ sender: UIButton) {
-        chooseView.isHidden = false
-    }
-    
-    @IBAction func goToCameta(_ sender: UIButton) {
-        openCamera()
-    }
-    //
-    @objc func hideChoser(){
-        chooseView.isHidden = true
-        view.endEditing(true)
-    }
-    
-    @IBAction func chooseFromPhotp(_ sender: UIButton) {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selectionLimit = 1
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = self
-        present(picker, animated: true)
-        
-    }
-    func picker(_ picker: PHPickerViewController, didFinishPicking reaults: [PHPickerResult]) {
-        dismiss(animated: true)
-        for result in reaults {
-            result.itemProvider.loadObject(ofClass: UIImage.self) { image, error in
-                if let image = image as? UIImage {
-                    DispatchQueue.main.async {
-                        self.attachmentPhoto.image = image
-                    }
-                }else {
-                }
-            }
-        }
-    }
-    
-    
+
     
     @IBAction func submitButton(_ sender: UIButton) {
         //

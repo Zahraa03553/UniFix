@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BC9B1D22F09628300E9E9D3 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC9B1D12F09628300E9E9D3 /* ResetPasswordViewController.swift */; };
 		5BCBCB8A2EEBD54E002B3EDC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB892EEBD54E002B3EDC /* FirebaseAuth */; };
 		5BCBCB8C2EEBD54E002B3EDC /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB8B2EEBD54E002B3EDC /* FirebaseCore */; };
 		5BCBCB8E2EEBD54E002B3EDC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 5BCBCB8D2EEBD54E002B3EDC /* FirebaseDatabase */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		5B4668A82EF024FD0031429C /* UniFix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UniFix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BC9B1D12F09628300E9E9D3 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -58,6 +60,7 @@
 		5BCBCB472EEBB0AD002B3EDC = {
 			isa = PBXGroup;
 			children = (
+				5BC9B1D12F09628300E9E9D3 /* ResetPasswordViewController.swift */,
 				5BCBCB522EEBB0AD002B3EDC /* UniFix */,
 				5B4668A82EF024FD0031429C /* UniFix.app */,
 			);
@@ -145,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BC9B1D22F09628300E9E9D3 /* ResetPasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

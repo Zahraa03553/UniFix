@@ -33,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let  user = Auth.auth().currentUser {
                 goToUserTypeTB(uid: user.uid)
         }
-               // guard let userId = Auth.auth().currentUser?.uid else {return}
+          //  guard let userId = Auth.auth().currentUser?.uid else {return}
                
              else  if !UserDefaults.standard.bool(forKey:"hasLunchedBefore") {
                 self.showWelcome()

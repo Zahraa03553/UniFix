@@ -10,7 +10,11 @@ Feature List
 4- Create New user by admin
 
 Setup Instruction:
+First clone repository by running git clone https://github.com/Zahraa03553/UniFix.git 
+Then navigate to project directory using cd UniFix
 
+Repository URL
+https://github.com/Zahraa03553/UniFix.git
 
 Admin Credentials
 Email: unifix.admi@gmail.com

@@ -22,3 +22,5 @@ Password: Zah03553
 
 Design Changes
 Some Admin feature is remove like assign maintenance and categorise the issues after discussion with the course coordinator 
+
+Simulator the abo testing on it iphone 16 ipad 11

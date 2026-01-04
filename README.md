@@ -9,8 +9,12 @@ Feature List
 3- Status Management (Update status by Maintenance team and tracking the progress by Requester)
 4- Create New user by admin
 
+Setup Instruction:
+
+
 Admin Credentials
 Email: unifix.admi@gmail.com
 Password: Zah03553
 
 Design Changes
+Some Admin feature is remove like assign maintenance and categorise the issues after discussion with the course coordinator 
